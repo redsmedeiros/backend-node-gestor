@@ -29,6 +29,14 @@ class ProductController{
             res.status(422).json({message: 'Quantidade é obrigatória'})
         }
 
+        //verificar se esse nome já está cadastrado
+        const productExist = await ProductModel.findOne({name: name})
+
+        if(productExist){
+
+            res.status(422).json({message: 'Produto já registrado'})
+        }
+
         //metodo do model para criar um produto no banco
         const createdProduct = await ProductModel.create(req.body);
 
@@ -82,12 +90,50 @@ class ProductController{
     }
 
     //metodo para atualizar um produto
-    async update(){
+    async update(req, res){
+
+        //pegar o id do produto a ser atualizado
+        const { id } = req.params
+
+        try{
+             //buscar por id e atualizar
+            await ProductModel.findByIdAndUpdate(id, req.body)
+
+            return res.status(200).json({message: 'Produto atualizado'})
+
+        }catch(err){
+
+            return res.status(404).json({message: err})
+
+        }
 
     }
 
     //metodo para deletar o produto
-    async destroy(){
+    async destroy(req, res){
+
+        try{
+
+            const { id } = req.params
+
+            const productDeleted = await ProductModel.findByIdAndDelete(id)
+
+            if(!productDeleted){
+
+                return res.status(404).json({message: 'Produto não existe'})
+            }
+
+            return res.status(200).json({message: 'Produto deletado'})
+
+       }catch(err){
+
+            return res.status(404).json({message: 'Falha ao atualizar produtos' + err})
+
+       }
+
+    
+
+
 
     }
 }
