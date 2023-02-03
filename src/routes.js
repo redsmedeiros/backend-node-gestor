@@ -1,6 +1,7 @@
 //importar o router do express
 const { Router } = require('express')
 const ProductController = require('./controllers/ProductController')
+const ClienteController = require('./controllers/ClienteController')
 
 //instanciar o objeto de rotas
 const routes = Router()
@@ -17,5 +18,8 @@ routes.get('/products', ProductController.index)
 routes.get('/products/:id', ProductController.show)
 routes.put('/products/:id', ProductController.update)
 routes.delete('/products/:id', ProductController.destroy)
+
+//ROTAS DE CLIENTES
+routes.post('/clientes', ClienteController.store)
 
 module.exports = routes
