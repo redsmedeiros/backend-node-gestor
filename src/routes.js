@@ -21,5 +21,9 @@ routes.delete('/products/:id', ProductController.destroy)
 
 //ROTAS DE CLIENTES
 routes.post('/clientes', ClienteController.store)
+routes.get('/clientes', ClienteController.index)
+routes.get('/clientes/:id', ClienteController.show)
+routes.put('/clientes/:id', ClienteController.update)
+routes.delete('/clientes/:id', ClienteController.destroy)
 
 module.exports = routes
